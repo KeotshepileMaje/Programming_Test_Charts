@@ -6,16 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pie Chart</title>
     <link rel="stylesheet" href="./src/css/styles.css" />
-    <script src="./src/scripts/main.js"  type="module" defer></script>
+    <link rel="stylesheet" href="./src/css/searchForm.css" />
+    <link rel="stylesheet" href="./src/css/dropDown.css" />
+    <script src="./src/scripts/main.js" type="module" defer></script>
   </head>
   <body>
-    <table>
-      <tr class="bg-info">
-        <th>Name and Surname</th>
-        <th>Designation</th>
-        <th>Department</th>
-      </tr>
-      <tbody id="myTable"></tbody>
-    </table>
+    <div class="table">
+      <div class="table_header">
+        <h1>Employee's Information</h1>
+      </div>
+      <div class="search_form">
+        <form>
+          <input type="text" placeholder="search" name="q" />
+          <img src="./src/img/search.png" alt="search_icon" />
+        </form>
+      </div>
+      <div class="table_body">
+        <table>
+          <thead>
+            <tr>
+              <th>Name and Surname</th>
+
+              <th>
+                <div class="drop_down_menu">
+                  <div class="select-btn">
+                    <span class="sBtn-text">Select your option</span>
+                  </div>
+                  <ul class="options">
+                    
+                  </ul>
+                </div>
+              </th>
+              <th>Department</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="table_footer">
+        <div class="pagination">Pagination</div>
+      </div>
+    </div>
   </body>
 </html>
