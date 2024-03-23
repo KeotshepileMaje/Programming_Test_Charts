@@ -1,6 +1,6 @@
 import Fuse from "https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.mjs";
 
-import getData from "../../libs/getData.js";
+import getData from "../../libs/getUsers.js";
 
  // function pagination(pageNumber) {
   //   const pageSize = 20;
