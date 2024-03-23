@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./src/css/searchForm.css" />
     <link rel="stylesheet" href="./src/css/dropDown.css" />
     <script src="./src/scripts/usersTable.js" type="module" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
   </head>
   <body>
     <div class="table">
@@ -17,7 +18,7 @@
       </div>
       <div class="search_form">
         <form>
-          <input type="text" placeholder="search" name="q" />
+          <input type="text" placeholder="search" id="search_input" />
           <img src="./src/img/search.png" alt="search_icon" />
         </form>
       </div>
@@ -31,9 +32,7 @@
                   <div class="select-btn">
                     <span class="sBtn-text">Select your option</span>
                   </div>
-                  <ul class="options">
-                    
-                  </ul>
+                  <ul class="options"></ul>
                 </div>
               </th>
               <th>Department</th>
@@ -45,6 +44,6 @@
       <div class="table_footer">
         <div class="pagination">Pagination</div>
       </div>
-    </div>
+    </div>  
   </body>
 </html>

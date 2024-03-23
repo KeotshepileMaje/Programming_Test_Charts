@@ -1,17 +1,8 @@
-import Fuse from "https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.mjs";
-
 import getData from "../../libs/getUsers.js";
-
- // function pagination(pageNumber) {
-  //   const pageSize = 20;
-  //   const skipPage = (pageNumber - 1) * pageSize;
-
-  //   return skipPage;
-  // }
 
 let selectedDesignation = null;
 
-const buildTable = (data) => {
+const buildTable = async (data) => {
   const tableBody = document.querySelector(".table_body table tbody");
 
   // Error handling for missing table element
@@ -20,24 +11,27 @@ const buildTable = (data) => {
     return; // Exit if table element is not found
   }
 
+  // Clear existing table rows
+  tableBody.innerHTML = "";
+
   // Function for creating table rows using template literals
   function createTableRow(user) {
     const template = `
-      <tr>
-        <td>${user.name} ${user.surname}</td>
-        <td>${user.designation}</td>
-        <td>${user.department}</td>
-      </tr>
-    `;
+            <tr>
+                <td>${user.name} ${user.surname}</td>
+                <td>${user.designation}</td>
+                <td>${user.department}</td>
+            </tr>
+        `;
 
-    const row = document.createElement("tr");
-    row.innerHTML = template.trim(); // Trim leading/trailing whitespace
-
-    return row;
+    return template;
   }
 
-  const tableRows10 = data.slice(0, 20).map(createTableRow); // Create table rows with map
-  tableBody.append(...tableRows10); // Efficiently append rows using spread syntax
+  // Create and append table rows for each user in data
+  data.forEach((user) => {
+    const rowHtml = createTableRow(user);
+    tableBody.insertAdjacentHTML("beforeend", rowHtml);
+  });
 };
 
 const createDropDownMenu = (data) => {
@@ -58,60 +52,90 @@ const createDropDownMenu = (data) => {
     const li = document.createElement("li");
     li.innerHTML = dropDownTemplate.trim();
 
-    return li
+    return li;
   };
 
-  console.log(data)
+  console.log(data);
   const dropDownOptions = data.map(createOptions);
   optionsContainer.append(...dropDownOptions);
-  console.log(dropDownMenu)
+  console.log(dropDownMenu);
 
   dropDownOptions.forEach((option) => {
     option.addEventListener("click", () => {
       let selectedOption = option.querySelector("span").innerText;
 
       selectedDesignation = selectedOption;
-      console.log(selectedOption)
+      console.log(selectedOption);
       sBtn_text.innerText = selectedOption;
       dropDownMenu.classList.remove("active");
     });
   });
 };
 
-createDropDownMenu(await getData());
+// Wrap your code within an asynchronous function for proper execution
+(async function () {
+  const data = await getData(); // Fetch data only once
 
-console.log(selectedDesignation)
+  createDropDownMenu(data);
+  buildTable(data);
+  handleSearchInput(data);
+})();
 
-buildTable(await getData());
+// Modify handleSearchInput function to accept data as a parameter
+async function handleSearchInput(data) {
+  const fuse = new Fuse(data, {
+    keys: ["name", "surname", "designation", "department"],
+    threshold: 0.2,
+  }); // Initialize Fuse with data
+  const searchInput = document.getElementById("search_input");
+  const tableBody = document.querySelector(".table_body table tbody");
 
+  searchInput.addEventListener("input", function (event) {
+    const searchTerm = event.target.value.trim();
 
+    const result = fuse.search(searchTerm);
+    console.log(result);
+    if (searchTerm === "") {
+      console.log("data...f.");
+      buildTable(data);
+    } else {
+      // Extract user information from search results
+      const users = result.map((item) => item.item);
+      // Rebuild the table with user information
+      buildTable(users);
+    }
+  });
+}
+
+// createDropDownMenu(await getData());
+
+// buildTable(await getData());
+
+// async function handleSearchInput() {
+//   const fuse = new Fuse(await getData(), {
+//     keys: ["name", "surname", "designation", "department"],
+//     threshold: 0.2,
+//   }); // Initialize Fuse with data
+//   const searchInput = document.getElementById("search_input");
+
+//   searchInput.addEventListener("input", function (event) {
+//     const searchTerm = event.target.value.trim();
+//     const result = fuse.search(searchTerm);
+
+//     buildTable(result)
+
+//     console.log(result);
+//   });
+// }
+
+// // Call the function to handle search input
+// handleSearchInput();
 
 //--------------------------------------------------------------------//
 
-// const fuse = await new Fuse( cachedData, {
-//   keys: ["name", "surname", "department", "disignation"],
-// });
+// function pagination(pageNumber) {
+//   const pageSize = 20;
+//   const skipPage = (pageNumber - 1) * pageSize;
 
-// console.log(fuse)
-
-// const search = document.querySelector(".input-group input"),
-//   table_rows = document.querySelectorAll("tbody tr"),
-//   table_headings = document.querySelectorAll("thead th");
-
-// // 1. Searching for specific data of HTML table
-// search.addEventListener("input", searchTable);
-
-// function searchTable() {
-//   table_rows.forEach((row, i) => {
-//     let table_data = row.textContent.toLowerCase(),
-//       search_data = search.value.toLowerCase();
-
-//     row.classList.toggle("hide", table_data.indexOf(search_data) < 0);
-//     row.style.setProperty("--delay", i / 25 + "s");
-//   });
-
-//   document.querySelectorAll("tbody tr:not(.hide)").forEach((visible_row, i) => {
-//     visible_row.style.backgroundColor =
-//       i % 2 == 0 ? "transparent" : "#0000000b";
-//   });
+//   return skipPage;
 // }
