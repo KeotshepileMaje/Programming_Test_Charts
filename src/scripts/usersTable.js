@@ -68,6 +68,14 @@ const createDropDownMenu = (data) => {
       console.log(selectedOption);
       sBtn_text.innerText = selectedOption;
       dropDownMenu.classList.remove("active");
+
+      // Filter users based on selected designation
+      const filteredUsers = data.filter(
+        (user) => user.designation === selectedDesignation
+      );
+
+      buildTable(filteredUsers);
+
     });
   });
 };
