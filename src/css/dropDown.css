@@ -1,0 +1,36 @@
+.drop_down_menu {
+  position: relative; /* Set the parent container to relative positioning */
+  z-index: 30;
+  display: inline-block;
+}
+
+.drop_down_menu .options {
+  position: absolute; /* Position the options dropdown absolutely */
+  height: 350px;
+  overflow: auto;
+  top: 1rem;
+  left: -10px;
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+.drop_down_menu.active .options {
+  display: block;
+}
+
+.options li {
+  display: flex;
+  height: 55px;
+  cursor: pointer;
+  padding: 0 16px;
+  border-radius: 8px;
+  align-items: center;
+  background: #fff;
+}
+.options .option:hover {
+  background: #f2f2f2;
+}
