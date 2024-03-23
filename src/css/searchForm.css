@@ -1,0 +1,27 @@
+.search_form {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding-right: 1rem;
+}
+.search_form form {
+  display: flex;
+  justify-content: space-between;
+  gap:0.5rem;
+  padding: 10px 20px;
+  border-radius: 0.6rem;
+  border: 1px solid red;
+  background-color: aqua;
+  width: 33%;
+  box-shadow: 0 .1rem .4rem #0002;
+  backdrop-filter: blur(10px) ;
+}
+.search_form form input {
+  background: transparent;
+  border:0;
+  outline: none;
+}
+.search_form form img {
+  box-sizing: border-box;
+  width: 15px;
+}
