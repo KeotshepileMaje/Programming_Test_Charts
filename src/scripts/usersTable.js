@@ -1,8 +1,8 @@
 import getData from "../../libs/getUsers.js";
+import pagination from "../../libs/pagination.js";
 
-let selectedDesignation = null;
 
-const buildTable = async (data) => {
+const buildTable = async (data, pageNumber) => {
   const tableBody = document.querySelector(".table_body table tbody");
 
   // Error handling for missing table element
@@ -27,11 +27,15 @@ const buildTable = async (data) => {
     return template;
   }
 
-  // Create and append table rows for each user in data
-  data.forEach((user) => {
-    const rowHtml = createTableRow(user);
+  // Calculate start and end indices for pagination
+  const startIndex = (pageNumber - 1) * 10;
+  const endIndex = pageNumber * 10;
+
+  // Create and append table rows for the users in the current page
+  for (let i = startIndex; i < endIndex && i < data.length; i++) {
+    const rowHtml = createTableRow(data[i]);
     tableBody.insertAdjacentHTML("beforeend", rowHtml);
-  });
+  }
 };
 
 const createDropDownMenu = (data) => {
@@ -44,9 +48,9 @@ const createDropDownMenu = (data) => {
     dropDownMenu.classList.toggle("active");
   });
 
-  const createOptions = (user) => {
+  const createOptions = (designation) => {
     const dropDownTemplate = `
-      <span>${user.designation}</span>
+      <span>${designation}</span>
     `;
 
     const li = document.createElement("li");
@@ -55,16 +59,18 @@ const createDropDownMenu = (data) => {
     return li;
   };
 
-  console.log(data);
-  const dropDownOptions = data.map(createOptions);
+  const designations = data
+    .map((user)=> user.designation)
+  const noDuplicateDesignations = [...new Set(designations)];
+
+  const dropDownOptions = noDuplicateDesignations.map(createOptions);
   optionsContainer.append(...dropDownOptions);
-  console.log(dropDownMenu);
 
   dropDownOptions.forEach((option) => {
     option.addEventListener("click", () => {
       let selectedOption = option.querySelector("span").innerText;
 
-      selectedDesignation = selectedOption;
+      const selectedDesignation = selectedOption;
       console.log(selectedOption);
       sBtn_text.innerText = selectedOption;
       dropDownMenu.classList.remove("active");
@@ -75,19 +81,9 @@ const createDropDownMenu = (data) => {
       );
 
       buildTable(filteredUsers);
-
     });
   });
 };
-
-// Wrap your code within an asynchronous function for proper execution
-(async function () {
-  const data = await getData(); // Fetch data only once
-
-  createDropDownMenu(data);
-  buildTable(data);
-  handleSearchInput(data);
-})();
 
 // Modify handleSearchInput function to accept data as a parameter
 async function handleSearchInput(data) {
@@ -96,7 +92,6 @@ async function handleSearchInput(data) {
     threshold: 0.2,
   }); // Initialize Fuse with data
   const searchInput = document.getElementById("search_input");
-  const tableBody = document.querySelector(".table_body table tbody");
 
   searchInput.addEventListener("input", function (event) {
     const searchTerm = event.target.value.trim();
@@ -115,35 +110,18 @@ async function handleSearchInput(data) {
   });
 }
 
-// createDropDownMenu(await getData());
+// Using this IIFE method and wraping all my functions that need to get 
+// data aware to fetch data only once and use it on all the functions.
+(async function () {
+  const data = await getData();
+  console.log("Data length:", data.length); // Check if data is populated
 
-// buildTable(await getData());
+  createDropDownMenu(data);
+  
+  handleSearchInput(data);
 
-// async function handleSearchInput() {
-//   const fuse = new Fuse(await getData(), {
-//     keys: ["name", "surname", "designation", "department"],
-//     threshold: 0.2,
-//   }); // Initialize Fuse with data
-//   const searchInput = document.getElementById("search_input");
-
-//   searchInput.addEventListener("input", function (event) {
-//     const searchTerm = event.target.value.trim();
-//     const result = fuse.search(searchTerm);
-
-//     buildTable(result)
-
-//     console.log(result);
-//   });
-// }
-
-// // Call the function to handle search input
-// handleSearchInput();
-
-//--------------------------------------------------------------------//
-
-// function pagination(pageNumber) {
-//   const pageSize = 20;
-//   const skipPage = (pageNumber - 1) * pageSize;
-
-//   return skipPage;
-// }
+  pagination(data.length, function (newPage) {
+    buildTable(data, newPage);
+    console.log("New Page:", newPage)
+  });
+})();

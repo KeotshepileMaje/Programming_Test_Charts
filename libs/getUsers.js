@@ -6,7 +6,7 @@
  * @throws {Error} - If the network response is not successful or an error occurs during processing.
  */
 
-export default async function getData(filter) {
+export default async function getData() {
   try {
     const response = await fetch("../../utils/users.json");
 
@@ -15,14 +15,6 @@ export default async function getData(filter) {
     }
 
     const data = await response.json();
-
-    if (filter) {
-      const designation = data.filter((user) => {
-        user.designation === filter;
-      });
-
-      return designation;
-    }
 
     return data;
   } catch (error) {

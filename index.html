@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./src/css/searchForm.css" />
     <link rel="stylesheet" href="./src/css/dropDown.css" />
     <link rel="stylesheet" href="./src/css/table.css" />
+    <link rel="stylesheet" href="./src/css/pagination.css" />
     <script src="./src/scripts/usersTable.js" type="module" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
   </head>
@@ -31,7 +32,7 @@
               <th>
                 <div class="drop_down_menu">
                   <div class="select-btn">
-                    <span class="sBtn-text">Select your option</span>
+                    <span class="sBtn-text">Designations</span>
                   </div>
                   <ul class="options"></ul>
                 </div>
@@ -42,9 +43,16 @@
           <tbody></tbody>
         </table>
       </div>
+
       <div class="table_footer">
-        <div class="pagination">Pagination</div>
+        <div class="pagination_box">
+          <button type="button" class="prev">Prev</button>
+          <ul id="pagination_list">
+          </ul>
+          <button type="button" class="next">Next</button>
+        </div>
       </div>
-    </div>  
+
+    </div>
   </body>
 </html>

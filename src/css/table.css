@@ -26,14 +26,6 @@
   overflow: auto;
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 1rem;
-}
-
 table, th, td {
     border-collapse: collapse;
     padding: 1rem;
