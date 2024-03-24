@@ -2,6 +2,7 @@
   position: relative; /* Set the parent container to relative positioning */
   z-index: 30;
   display: inline-block;
+  z-index: 3
 }
 
 .drop_down_menu .options {

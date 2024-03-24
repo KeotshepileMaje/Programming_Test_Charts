@@ -16,6 +16,15 @@
   width: 100%;
   padding: 1rem;
 }
+.select-btn {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem
+}
+.icon svg{
+    width:15px
+}
 .table_body {
     margin:3rem;
   background-color: #eceaea;
