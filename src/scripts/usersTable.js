@@ -80,7 +80,9 @@ const createDropDownMenu = (data) => {
         (user) => user.designation === selectedDesignation
       );
 
-      buildTable(filteredUsers);
+      pagination(filteredUsers.length, function (newPage) {
+        buildTable(filteredUsers, newPage);
+      });
     });
   });
 };
@@ -100,13 +102,16 @@ async function handleSearchInput(data) {
     const result = fuse.search(searchTerm);
     console.log(result);
     if (searchTerm === "") {
-      console.log("data...f.");
-      buildTable(data,);
+      pagination(data.length, function (newPage) {
+        buildTable(data, newPage);
+      });
     } else {
       // Extract user information from search results
       const users = result.map((item) => item.item);
       // Rebuild the table with user information
-      buildTable(users);
+      pagination(users.length, function (newPage) {
+        buildTable(users, newPage);
+      });
     }
   });
 }
@@ -123,6 +128,5 @@ async function handleSearchInput(data) {
 
   pagination(data.length, function (newPage) {
     buildTable(data, newPage);
-    console.log("New Page:", newPage)
   });
 })();
