@@ -85,6 +85,7 @@ const createDropDownMenu = (data) => {
   });
 };
 
+
 // Modify handleSearchInput function to accept data as a parameter
 async function handleSearchInput(data) {
   const fuse = new Fuse(data, {
@@ -100,7 +101,7 @@ async function handleSearchInput(data) {
     console.log(result);
     if (searchTerm === "") {
       console.log("data...f.");
-      buildTable(data);
+      buildTable(data,);
     } else {
       // Extract user information from search results
       const users = result.map((item) => item.item);

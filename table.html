@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table</title>
+    <link rel="stylesheet" href="./src/css/styles.css" />
+    <link rel="stylesheet" href="./src/css/searchForm.css" />
+    <link rel="stylesheet" href="./src/css/dropDown.css" />
+    <link rel="stylesheet" href="./src/css/table.css" />
+    <link rel="stylesheet" href="./src/css/pagination.css" />
+    <script src="./src/scripts/usersTable.js" type="module" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+  </head>
+  <body>
+    <div class="table">
+      <div class="table_header">
+        <h1>Employee's Information</h1>
+      </div>
+      <div class="search_form">
+        <form>
+          <input type="text" placeholder="search" id="search_input" />
+          <img src="./src/img/search.png" alt="search_icon" />
+        </form>
+      </div>
+      <div class="table_body">
+        <table>
+          <thead>
+            <tr>
+              <th>Name and Surname</th>
+              <th>
+                <div class="drop_down_menu">
+                  <div class="select-btn">
+                    <span class="sBtn-text">Designations</span>
+                  </div>
+                  <ul class="options"></ul>
+                </div>
+              </th>
+              <th>Department</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="table_footer">
+        <div class="pagination_box">
+          <button type="button" class="prev">Prev</button>
+          <ul id="pagination_list">
+          </ul>
+          <button type="button" class="next">Next</button>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

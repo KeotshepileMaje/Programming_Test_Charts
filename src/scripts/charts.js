@@ -21,7 +21,9 @@ async function generatePieChart() {
           },
         ],
       },
-      options: {},
+      options: {
+        responsiv: true
+      },
     });
   } catch (error) {
     console.error("Error:", error);
